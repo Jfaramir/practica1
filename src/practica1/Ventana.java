@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -51,7 +52,7 @@ public class Ventana extends javax.swing.JFrame {
         try {
             
             //creamos el objeto fileReader
-            FileReader fr = new FileReader("Proyecto\\libros.xml");
+            FileReader fr = new FileReader(ruta);
             
             //leemos el fichero y lo mostramos
             int valor = fr.read();
@@ -67,20 +68,12 @@ public class Ventana extends javax.swing.JFrame {
         }
     }
     
-    private void bufferedwriter(){
+    private void bufferedwriter(String escrito, String rutaArchivo){
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("Proyecto\\Libros.xml"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo));
             
-            bw.write("<libros>");
-                bw.newLine();
-            bw.write("<libro>");
-                bw.newLine();
-            bw.write("<titulo>El Capote</titulo>");
-                bw.newLine();
-            bw.write("</libro>");
-                bw.newLine();
-            bw.write("</libros>");
-                bw.newLine();
+            bw.write(escrito);
+                
                          
 //            
 //            for (int i=0; i< texto.length(); i++){
@@ -198,17 +191,46 @@ public class Ventana extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-       
+   
+ JFileChooser jF1= new JFileChooser(); 
+
+    try{ 
+        if(jF1.showOpenDialog(null)==jF1.APPROVE_OPTION){ 
+            String ruta = jF1.getSelectedFile().getAbsolutePath(); 
+            //Aqui ya tiens la ruta,,,ahora puedes crear un fichero n esa ruta y escribir lo k kieras... 
+            leer();
+            
+           
+            
+        } 
+    }catch (Exception ex){ 
+        
+        ex.printStackTrace(); 
+    } 
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        // TODO add your handling code here:
+        JFileChooser jF1= new JFileChooser(); 
+
+    try{ 
+        if(jF1.showSaveDialog(null)==jF1.APPROVE_OPTION){ 
+            String rutaArchivo = jF1.getSelectedFile().getAbsolutePath(); 
+            //Aqui ya tiens la ruta,,,ahora puedes crear un fichero n esa ruta y escribir lo k kieras... 
+            
+            bufferedwriter(jTextArea1.getText(),rutaArchivo);
+            
+        } 
+    }catch (Exception ex){ 
+        ex.printStackTrace(); 
+    } 
     }//GEN-LAST:event_jButton3MouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
 
-         escrito();
+       
+        
+         
          
 //         jf = new jfilechooser;
 //
@@ -258,15 +280,13 @@ public class Ventana extends javax.swing.JFrame {
             System.out.println("Ruta absoluta: " + f.getAbsolutePath());
         }
 
-        System.out.println("--------------------------------");
+        
 
         Ventana obj_fichero = new Ventana();
 
-        System.out.println("Escritura Y lectura del fichero libros FileWriterReader.xml");
+      
 
-        obj_fichero.escrito();
-        obj_fichero.bufferedwriter();         
-        obj_fichero.leer();
+        
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
