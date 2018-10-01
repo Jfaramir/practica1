@@ -5,6 +5,7 @@
  */
 package practica1;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -45,19 +46,20 @@ public class Ventana extends javax.swing.JFrame {
         }
     }
 
-    private void leer() {
+    private void leer(String rutaArchivo) {
         
         String nombre = "libros.xml";
         
         try {
             
             //creamos el objeto fileReader
-            FileReader fr = new FileReader("Proyecto\\libros.xml");
+            FileReader fr = new FileReader(rutaArchivo);
             
             //leemos el fichero y lo mostramos
             int valor = fr.read();
             while (valor != -1) {
-                System.out.print((char) valor);
+//                System.out.print((char) valor);
+                bufferedreader(rutaArchivo);
                 valor = fr.read();
             }
             
@@ -104,7 +106,23 @@ public class Ventana extends javax.swing.JFrame {
         }
     }
     
-
+    private void  bufferedreader(String rutaArchivo) throws FileNotFoundException{
+        BufferedReader br = new BufferedReader(new FileReader(rutaArchivo));
+               
+        try{
+       
+        while ( br.readLine() != null) {
+            
+            jTextArea1.read(br, br);
+            
+        }
+        }catch(IOException e){
+            System.out.println("fallo");
+        }
+            
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -191,8 +209,23 @@ public class Ventana extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-   
+        
+        
+        JFileChooser jF1= new JFileChooser(); 
 
+    try{ 
+        if(jF1.showOpenDialog(null)==jF1.APPROVE_OPTION){ 
+            String rutaArchivo = jF1.getSelectedFile().getAbsolutePath(); 
+            //Aqui ya tiens la ruta,,,ahora puedes crear un fichero n esa ruta y escribir lo k kieras... 
+            bufferedreader(rutaArchivo);
+            
+           
+            
+        } 
+    }catch (Exception ex){ 
+        
+        ex.printStackTrace(); 
+    } 
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
@@ -214,22 +247,7 @@ public class Ventana extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
 
-        JFileChooser jF1= new JFileChooser(); 
-
-    try{ 
-        if(jF1.showOpenDialog(null)==jF1.APPROVE_OPTION){ 
-            String ruta = jF1.getSelectedFile().getAbsolutePath(); 
-            //Aqui ya tiens la ruta,,,ahora puedes crear un fichero n esa ruta y escribir lo k kieras... 
-            leer();
-            
-           
-            
-        } 
-    }catch (Exception ex){ 
-        
-        ex.printStackTrace(); 
-    } 
-        
+       
          
          
 //         jf = new jfilechooser;
